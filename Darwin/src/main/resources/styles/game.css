@@ -1,0 +1,7 @@
+.animal-statistic {
+    -fx-padding: 3px 10px;
+}
+.animal-statistic-header {
+    -fx-font-size: 19px;
+    -fx-padding: 5px;
+}
