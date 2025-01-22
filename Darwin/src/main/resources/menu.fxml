@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ScrollPane?>
+
+<?import java.net.URL?>
+<GridPane fx:controller="visualization.MenuVisualizator"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
+>
+
+    <padding>
+        <Insets top="25" right="25" bottom="10" left="25"/>
+    </padding>
+
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="6">
+        <Label text="Darwin World" />
+    </HBox>
+
+
+    <Label text="Map size" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="6"
+    />
+
+    <Label text="Height:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="formMapHeight" text="50" />
+
+    <Label text="Width:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" fx:id="formMapWidth" text="50" />
+
+
+    <Label text="Plants" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="6"
+    />
+
+    <Label text="Start plants:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="formStartPlantNumber" text="5"/>
+
+    <Label text="Daily plants:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" fx:id="formDailyPlantIncrease" text="3"/>
+
+    <Label text="Plant energy:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+    <TextField GridPane.columnIndex="5" GridPane.rowIndex="4" fx:id="formOnePlantEnergy" text="5"/>
+
+    <Label text="Animal and energy" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="6"
+    />
+
+    <Label text="Start animals:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="formStartAnimalNumber" text="10"/>
+
+    <Label text="Start animal energy:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="6" fx:id="formStartAnimalEnergy" text="4000"/>
+
+    <Label text="Animal energy loss due to reproduction:" GridPane.columnIndex="4" GridPane.rowIndex="6"
+    />
+    <TextField GridPane.columnIndex="5" GridPane.rowIndex="6" fx:id="formAnimalSexEnergyLoss" text="20"/>
+
+    <Label text="Daily animal energy loss:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="formAnimalDailyEnergyLoss" text="10"/>
+
+    <Label text="Animal energy to reproduce:" GridPane.columnIndex="2" GridPane.rowIndex="7"
+    />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="7" fx:id="formAnimalSexEnergy" text="50"/>
+
+    <Label text="Animal mutation and genotype" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="6"
+    />
+
+    <Label text="Animal min mutation:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" fx:id="formAnimalMinMutation" text="2"/>
+
+    <Label text="Animal max mutation:" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="9" fx:id="formAnimalMaxMutation" text="4"/>
+
+    <Label text="Animal genotype length:" GridPane.columnIndex="4" GridPane.rowIndex="9"/>
+    <TextField GridPane.columnIndex="5" GridPane.rowIndex="9" fx:id="formAnimalGenesLength" text="8"/>
+
+    <Label text="Other options" GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="6"
+    />
+
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="11">
+        <CheckBox fx:id="formFireMap"/>
+    </HBox>
+    <Label text="Fire World Option" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="11">
+        <CheckBox fx:id="formMutatedAnimal"/>
+    </HBox>
+    <Label text="Mutated Animal Option" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="11">
+        <CheckBox fx:id="formExportStatistics"/>
+    </HBox>
+    <Label text="Export daily statistics" GridPane.columnIndex="5" GridPane.rowIndex="11" />
+
+
+    <Button text="START" GridPane.columnIndex="2" GridPane.rowIndex="14" GridPane.columnSpan="2"
+            fx:id="createGame"  maxWidth="1.7976931348623157E308"/>
+    <Label text="Fire Interval" GridPane.columnIndex="2" GridPane.rowIndex="15" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="15" fx:id="formFireInterval" text="0" />
+
+    <Label text="Fire Duration" GridPane.columnIndex="2" GridPane.rowIndex="16" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="16" fx:id="formFireDuration" text="0" />
+
+</GridPane>
