@@ -82,12 +82,13 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
     @FXML
     private GridPane boardPane;
 
+
     private boolean ifShowMostPop = false;
     private boolean ifShowJungle = false;
 
     @FXML
     //@Deprecated(since = "1.2")
-    private void initialize() {
+    public void initialize() {
 
         for (Node node : getClassElements("animal-statistic")) {
             node.setVisible(false);
@@ -290,7 +291,26 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
 
     }
 
-    public void stalkCreature(World world, Animal animal) {
+//    public void stalkCreature(World world, Animal animal) {
+//        if (chosenCreature != null) {
+//            Pane lastAnimalPane = (Pane) rootPane.lookup("#" + chosenCreature.getId());
+//            Circle lastCircle = (Circle) lastAnimalPane.getChildren().get(0);
+//            lastCircle.setFill(GameStatic.getAnimalColor(chosenCreature.getEnergy(), chosenCreature));
+//        }
+//
+//        if (animal.equals(chosenCreature)) {
+//            chosenCreature = null;
+//        } else {
+//            chosenCreature = animal;
+//            Pane animalPane = (Pane) rootPane.lookup("#" + animal.getId());
+//            Circle circle = (Circle) animalPane.getChildren().get(0);
+//            circle.setFill(Color.INDIGO);
+//        }
+//
+//        showAnimalStats();
+//    }
+public void stalkCreature(World world, Animal animal) {
+    if (rootPane != null) {
         if (chosenCreature != null) {
             Pane lastAnimalPane = (Pane) rootPane.lookup("#" + chosenCreature.getId());
             Circle lastCircle = (Circle) lastAnimalPane.getChildren().get(0);
@@ -306,7 +326,11 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
             circle.setFill(Color.INDIGO);
         }
         showAnimalStats();
+    } else {
+        // Log or handle the case where rootPane is null, e.g. show an error or warning
+        System.err.println("rootPane is null! Cannot perform action.");
     }
+}
 
     public void showAnimalStats() {
         if (chosenCreature != null) {

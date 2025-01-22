@@ -14,11 +14,11 @@ public class Simulation implements Runnable {
 
     private final World world;
     public final WorldStats worldStats;
-    private boolean running = true;
+    public boolean running = true;
     public final GameVisualizator presenter;
-    private final Statistics statistics = new Statistics();
-    private int dayCount = 0;
-    private boolean paused = false;
+    public final Statistics statistics = new Statistics();
+    public int dayCount = 0;
+    public boolean paused = false;
     public Simulation(WorldStats worldStats, GameVisualizator presenter) {
         this.worldStats = worldStats;
         this.presenter = presenter;
