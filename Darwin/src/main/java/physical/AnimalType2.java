@@ -18,7 +18,7 @@ public class AnimalType2 extends Animal {
 
         for (int ID : mutatedIndexes) {
             int currentGene = this.genes.get(ID);
-            int direction = random.nextBoolean() ? 1 : -1; // Losowy wybór: w górę (+1) lub w dół (-1)
+            int direction = random.nextBoolean() ? 1 : -1;
             int newGene = (currentGene + direction + MoveDirection.values().length) % MoveDirection.values().length;
             this.genes.set(ID, newGene);
         }

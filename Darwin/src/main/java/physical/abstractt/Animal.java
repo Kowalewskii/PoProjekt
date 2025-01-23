@@ -1,4 +1,6 @@
 package physical.abstractt;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import physical.Vector2d;
 import enums.MoveDirection;
 import javafx.scene.Node;
@@ -58,8 +60,16 @@ abstract public class Animal extends GameElement {
         return finalDay;
     }
     public Node getVisualization(Pane pane) {
-        return new Circle(pane.getWidth()/ 2.5);
+        Circle circle = new Circle(pane.getWidth() / 2.5);
+        DropShadow shadow = new DropShadow();
+        shadow.setRadius(10);
+        shadow.setOffsetX(5);
+        shadow.setOffsetY(5);
+        shadow.setColor(Color.rgb(0, 0, 0, 0.3));
+        circle.setEffect(shadow);
+        return circle;
     }
+
 
     //inne metody:
     //czy zwierzak zyje?
@@ -97,6 +107,7 @@ abstract public class Animal extends GameElement {
             }
         }
     }
+
     protected void eating(int energy){
         consumedPlants++;
         this.energy+=energy;
@@ -143,7 +154,7 @@ abstract public class Animal extends GameElement {
     }
     protected List<Integer> randomIDsToMutate(int mutations) {
         if (genes.isEmpty()) {
-            return new ArrayList<>();  // Jeśli lista genów jest pusta, zwróć pustą listę
+            return new ArrayList<>();
         }
 
         List<Integer> allIDs = new ArrayList<>();
@@ -154,7 +165,7 @@ abstract public class Animal extends GameElement {
 
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < mutations; i++) {
-            if (allIDs.isEmpty()) break;  // Zapobiega błędowi, jeśli wszystkie ID zostały już wybrane
+            if (allIDs.isEmpty()) break;
             int randomIDx = random.nextInt(allIDs.size());
             result.add(allIDs.get(randomIDx));
             allIDs.remove(randomIDx);
@@ -199,6 +210,7 @@ abstract public class Animal extends GameElement {
         energy-=dailyEnergyLoss;
     }
     public void death(int currentDay){
+        this.energy = 0;
         this.finalDay = currentDay;
     }
 }

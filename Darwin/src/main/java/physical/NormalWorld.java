@@ -36,6 +36,16 @@ public class NormalWorld extends World {
         }
     }
 
+    @Override
+    public void startFire() {
+
+    }
+
+    @Override
+    public void endFire() {
+
+    }
+
     boolean isInJungle(Vector2d position) {
         int height = boundary.topRight().getY();
         int lowerJungleBoundary = 2 * height / 5;

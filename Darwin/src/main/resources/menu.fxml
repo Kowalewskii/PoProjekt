@@ -94,9 +94,9 @@
     <Button text="START" GridPane.columnIndex="2" GridPane.rowIndex="14" GridPane.columnSpan="2"
             fx:id="createGame"  maxWidth="1.7976931348623157E308"/>
     <Label text="Fire Interval" GridPane.columnIndex="2" GridPane.rowIndex="15" />
-    <TextField GridPane.columnIndex="3" GridPane.rowIndex="15" fx:id="formFireInterval" text="0" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="15" fx:id="formFireInterval" text="1" />
 
     <Label text="Fire Duration" GridPane.columnIndex="2" GridPane.rowIndex="16" />
-    <TextField GridPane.columnIndex="3" GridPane.rowIndex="16" fx:id="formFireDuration" text="0" />
+    <TextField GridPane.columnIndex="3" GridPane.rowIndex="16" fx:id="formFireDuration" text="1" />
 
 </GridPane>

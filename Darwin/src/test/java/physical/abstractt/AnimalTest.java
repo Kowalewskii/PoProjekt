@@ -17,12 +17,11 @@ public class AnimalTest {
 
     @BeforeEach
     public void setUp() {
-        // Ustawiamy początkowe dane dla testów
         position = new Vector2d(5, 5);
         List<Integer> genes = Arrays.asList(1, 2, 3, 4,3,7);
         animal = new AnimalType1(genes, 100, position);
         partner = new AnimalType1(genes, 80, position);
-        world = new NormalWorld(10,10); // Zakładamy, że świat jest mockiem lub prostą implementacją
+        world = new NormalWorld(10,10);
     }
 
     @Test
@@ -49,7 +48,6 @@ public class AnimalTest {
 
     @Test
     public void testSex() {
-        // Before mating, both animals should have sufficient energy
         int initialEnergy = animal.getEnergy();
         animal.sex(world, partner, 50, 10, 1, 3);
         assertTrue(animal.getEnergy() < initialEnergy, "Energy should decrease after mating.");
@@ -75,15 +73,15 @@ public class AnimalTest {
     public void testDailyUpdate() {
         int initialEnergy = animal.getEnergy();
         int initialAge = animal.getAge();
-        animal.dailyUpdate(10); // Loss of 10 energy per day
+        animal.dailyUpdate(10);
         assertEquals(initialAge + 1, animal.getAge(), "Age should increase by 1.");
         assertEquals(initialEnergy - 10, animal.getEnergy(), "Energy should decrease by 10.");
     }
 
     @Test
     public void testDeath() {
-        animal.dailyUpdate(110); // Loss of all energy
-        animal.death(10); // Simulate death at day 10
+        animal.dailyUpdate(110);
+        animal.death(10);
         assertEquals(10, animal.getFinalDay(), "Final day of death should be recorded.");
     }
 

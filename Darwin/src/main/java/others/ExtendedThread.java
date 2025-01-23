@@ -14,7 +14,6 @@ public class ExtendedThread extends Thread {
         newExtendedThread.start();
         return newExtendedThread;
     }
-    // To resume the simulation, call the resumeSimulation method.
     public void pauseSimulation() {
         simulation.pauseSimulation();
     }

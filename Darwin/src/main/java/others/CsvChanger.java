@@ -28,7 +28,6 @@ public class CsvChanger {
                 GameStatic.convertDaysToTime(statistics.getAverageFinalDate()) + "," +
                 GameStatic.convertNumberToString(statistics.getAverageDescendantsNumber()) + "," +
 
-                // Animal statistics
                 (animal != null ? animal.getId() : GameLabelText.NO_SELECTED_ANIMAL.toString()) + "," +
                 (animal != null ? GameStatic.toStringIDGenes(animal.getGenes(), animal.getGenesID()) : GameLabelText.NO_SELECTED_ANIMAL.toString()) + "," +
                 (animal != null ? animal.getEnergy() : GameLabelText.NO_SELECTED_ANIMAL.toString()) + "," +

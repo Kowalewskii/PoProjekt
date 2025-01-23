@@ -19,7 +19,7 @@ public class WorldTest {
 
     @BeforeEach
     public void setUp() {
-        world = new NormalWorld(width, height); // Używamy NormalWorld, ponieważ jest dziedziczone po World
+        world = new NormalWorld(width, height);
     }
 
     @Test
@@ -30,7 +30,6 @@ public class WorldTest {
 
     @Test
     public void testGetAverageEnergy() {
-        // Testujemy, czy średnia energia zwierząt jest obliczana poprawnie
         Animal animal1 = new AnimalType1(List.of(1, 2, 3), 100, new Vector2d(0, 0));
         Animal animal2 = new AnimalType1(List.of(1, 2, 3), 200, new Vector2d(1, 1));
         world.placeAnimal(animal1);

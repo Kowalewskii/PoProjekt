@@ -4,109 +4,136 @@ import physical.abstractt.*;
 import java.util.*;
 
 public class FireWorld extends World {
-    private int fireInterval;
+
+    private int dayNumber;
+    private List<Vector2d> firePositions1;
+    private List<Vector2d> firePositions2;
+    private Map<Vector2d, Integer> firePositions3;
+    private Map<Vector2d, Integer> firePositions4;
     private int fireDuration;
-    private int dayNumber =0;
-    private List<Vector2d> firePositions; // Lista pozycji ognia
-    private Map<Vector2d, Integer> fireTimers; // Mapa pozycji ognia z liczbą tur, przez które ogień tam trwa
     private Random random;
 
     public FireWorld(int width, int height, int fireInterval, int fireDuration) {
         super(width, height);
-        this.fireInterval = fireInterval;
-        this.fireDuration = fireDuration;
-        this.firePositions = new ArrayList<>();
-        this.fireTimers = new HashMap<>();
         this.random = new Random();
+        this.dayNumber = 0;
+        this.firePositions1 = new ArrayList<>();
+        this.firePositions2 = new ArrayList<>();
+        this.firePositions3 = new HashMap<>();
+        this.firePositions4 = new HashMap<>();
+        this.fireDuration = fireDuration;
+        int lowerCenterBound = 2 * height / 5;
+        int upperCenterBound = 3 * height / 5;
+
+        for (int i = 0; i < width; i++){
+            for (int j = 0; j < lowerCenterBound; j++){
+                positions2.add(new Vector2d(i, j));
+            }
+
+            for (int j = lowerCenterBound; j < upperCenterBound; j++){
+                positions1.add(new Vector2d(i, j));
+            }
+
+            for (int j = upperCenterBound; j < height; j++){
+                positions2.add(new Vector2d(i, j));
+            }
+        }
     }
 
+    public List<Vector2d> getFirePositions1() {
+        return firePositions1;
+    }
+    public List<Vector2d> getFirePositions2() {
+        return firePositions2;
+    }
+    public Map<Vector2d, Integer> getFirePositions3() {
+        return firePositions3;
+    }
+    public Map<Vector2d, Integer> getFirePositions4() {
+        return firePositions4;
+    }
+    public int getDayNumber() {
+        return dayNumber;
+    }
     @Override
     public void passedDay(int dailyEnergyLoss) {
         for (physical.abstractt.Animal animal : this.getAllAnimals()) {
             animal.dailyUpdate(dailyEnergyLoss);
         }
-
-        if ( dayNumber% fireInterval == 0) {
-            startFire();
-        }
-
-        spreadFire();
-
-        updateFireTimers();
-
-        checkAnimalsInFire();
         dayNumber++;
     }
-
-    private void startFire() {
-        Vector2d startPos = getRandomPlantPosition();
-        firePositions.add(startPos);
-        fireTimers.put(startPos, fireDuration);
-    }
-
-    private Vector2d getRandomPlantPosition() {
-        List<Vector2d> plantPositions = new ArrayList<>(positions1);
-        plantPositions.addAll(positions2);
-        return plantPositions.get(random.nextInt(plantPositions.size()));
-    }
-
-    private void spreadFire() {
-        List<Vector2d> newFirePositions = new ArrayList<>();
-        for (Vector2d firePos : firePositions) {
-            int x = firePos.getX();
-            int y = firePos.getY();
-
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    if (Math.abs(dx) + Math.abs(dy) == 1) {
-                        int nx = x + dx;
-                        int ny = y + dy;
-
-                        Vector2d neighborPos = new Vector2d(nx, ny);
-                        if (!firePositions.contains(neighborPos)) {
-                            if (hasPlantAtPosition(neighborPos)) {
-                                newFirePositions.add(neighborPos);
-                            }
-                        }
-                    }
+    @Override
+    public void startFire() {
+        Vector2d startPos = this.getRandomPlantPosition();
+        this.firePositions3.put(startPos,fireDuration);
+        List<Vector2d> neighbours = getPlantNeighbours(startPos);
+        for (Vector2d neighbour : neighbours) {
+            this.firePositions3.put(neighbour, fireDuration);
+        }
+        for (Map.Entry<Vector2d, Integer> entry : firePositions3.entrySet()) {
+            Vector2d position = entry.getKey();
+            List<Animal> allAnimals = this.getAllAnimals();
+            for (Animal animal : allAnimals) {
+                if (animal.getPosition().equals(position)) {
+                    animal.death(dayNumber);
                 }
             }
+
         }
-        firePositions.addAll(newFirePositions);
+
     }
-    private void updateFireTimers() {
-        Iterator<Map.Entry<Vector2d, Integer>> iterator = fireTimers.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Vector2d, Integer> entry = iterator.next();
+    @Override
+    public void endFire() {
+        for (Map.Entry<Vector2d, Integer> entry : firePositions3.entrySet()) {
             Vector2d position = entry.getKey();
-            int remainingTime = entry.getValue();
-            if (remainingTime <= 1) {
-                removePlantAtPosition(position);
-                iterator.remove();
-                firePositions.remove(position);
-            } else {
-                fireTimers.put(position, remainingTime - 1);
+            Integer fireDuration2 = entry.getValue();
+            fireDuration2--;
+            if (fireDuration2 == 0) {
+                firePositions2.add(position);
             }
+            firePositions3.put(position, fireDuration2);
+
+        }
+        firePositions3.clear();
+    }
+    @Override
+   public void eatPlants(int plantEnergy) {
+       for (List<physical.abstractt.Animal> allAnimals : animals.values()) {
+           Vector2d currentPos = allAnimals.getFirst().getPosition();
+           if (plants.containsKey(currentPos)) {
+               physical.abstractt.Animal eater = this.dominatingAnimals(allAnimals, 1).get(0);
+               eater.eat(plantEnergy);
+               this.removeEaten(plants.get(currentPos));
+           }
+       }
+       for (Vector2d position: this.firePositions2) {
+           Animal eater = new AnimalType1(Arrays.asList(1, 2, 3, 4,3,7),2,position);
+           if (plants.containsKey(position)) {
+               eater.eat(0);
+               this.removeEaten(plants.get(position));
+           }
+       }
+       firePositions2.clear();
+   }
+    @Override
+    public void removeEaten(Plant eatenPlant){
+        super.removeEaten(eatenPlant);
+        Vector2d availablePosition = eatenPlant.getPosition();
+
+        if (this.isInJungle(availablePosition)){
+            positions1.add(availablePosition);
+        }else{
+            positions2.add(availablePosition);
         }
     }
 
-    private void removePlantAtPosition(Vector2d position) {
-        if (positions1.contains(position)) {
-            positions1.remove(position);
-        } else if (positions2.contains(position)) {
-            positions2.remove(position);
-        }
-    }
-    private boolean hasPlantAtPosition(Vector2d position) {
-        return positions1.contains(position) || positions2.contains(position);
-    }
-    private void checkAnimalsInFire() {
-        List<Animal> animals = getAllAnimals();
-        for (Animal animal : animals) {
-            Vector2d animalPosition = animal.getPosition();
-            if (firePositions.contains(animalPosition)) {
-                animal.death(dayNumber);
-            }
-        }
+    boolean isInJungle(Vector2d position) {
+        int height = boundary.topRight().getY();
+        int lowerJungleBoundary = 2 * height / 5;
+        int upperJungleBoundary = 3 * height / 5;
+
+        return lowerJungleBoundary <= position.getY() && position.getY() < upperJungleBoundary;
     }
 }
+
+

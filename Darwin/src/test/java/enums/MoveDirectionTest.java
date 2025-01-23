@@ -9,7 +9,6 @@ public class MoveDirectionTest {
 
     @Test
     public void testMovement() {
-        // Sprawdzamy, czy metoda movement() zwraca odpowiedni wektor dla kierunków
         assertEquals(new Vector2d(0, 1), MoveDirection.N.movement());
         assertEquals(new Vector2d(1, 1), MoveDirection.NE.movement());
         assertEquals(new Vector2d(1, 0), MoveDirection.E.movement());
