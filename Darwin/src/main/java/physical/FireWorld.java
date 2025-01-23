@@ -111,7 +111,7 @@ public class FireWorld extends World {
            if (plants.containsKey(position)) {
                eater.eat(0);
                this.removeEaten(plants.get(position));
-           }
+           }//costam
        }
        firePositions2.clear();
    }
