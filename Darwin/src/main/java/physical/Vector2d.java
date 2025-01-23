@@ -30,6 +30,9 @@ public class Vector2d {
         }
         return getX() == ((Vector2d) other).getX() && getY() == ((Vector2d) other).getY();
     }
+    public Vector2d add(Vector2d other) {
+        return new Vector2d(this.x + other.x, this.y + other.y);
+    }
     //hashcode
     @Override
     public int hashCode() {

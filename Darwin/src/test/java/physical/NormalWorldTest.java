@@ -21,21 +21,18 @@ public class NormalWorldTest {
 
     @Test
     public void testInitialWorldSize() {
-        // Sprawdzamy, czy świat ma odpowiednie rozmiary
         assertEquals(width, world.getBoundary().topRight().getX());
         assertEquals(height, world.getBoundary().topRight().getY());
     }
 
     @Test
     public void testPlantPlacement() {
-        // Sprawdzamy, czy rośliny mogą być umieszczane w odpowiednich miejscach
         world.placeNPlants(5);
         assertEquals(5, world.getPlants().size());
     }
 
     @Test
     public void testRemoveEatenPlant() {
-        // Sprawdzamy, czy rośliny są usuwane po zjedzeniu
         Plant plant = new Plant(new Vector2d(3, 3));
         world.getPlants().put(plant.getPosition(), plant);
         world.removeEaten(plant);
@@ -44,8 +41,7 @@ public class NormalWorldTest {
 
     @Test
     public void testRemoveEatenInJungle() {
-        // Sprawdzamy, czy rośliny w dżungli są poprawnie dodawane z powrotem do positions1
-        Plant plant = new Plant(new Vector2d(5, 5)); // w dżungli
+        Plant plant = new Plant(new Vector2d(5, 5));
         world.getPlants().put(plant.getPosition(), plant);
         world.removeEaten(plant);
         assertTrue(world.getPositions1().contains(plant.getPosition()));
@@ -53,8 +49,7 @@ public class NormalWorldTest {
 
     @Test
     public void testRemoveEatenOutOfJungle() {
-        // Sprawdzamy, czy rośliny poza dżunglą są dodawane do positions2
-        Plant plant = new Plant(new Vector2d(8, 8)); // poza dżunglą
+        Plant plant = new Plant(new Vector2d(8, 8));
         world.getPlants().put(plant.getPosition(), plant);
         world.removeEaten(plant);
         assertTrue(world.getPositions2().contains(plant.getPosition()));
@@ -62,7 +57,6 @@ public class NormalWorldTest {
 
     @Test
     public void testIsInJungle() {
-        // Testujemy metodę sprawdzającą, czy dane położenie jest w dżungli
         Vector2d positionInJungle = new Vector2d(5, 5);
         Vector2d positionOutOfJungle = new Vector2d(8, 8);
         assertTrue(world.isInJungle(positionInJungle));

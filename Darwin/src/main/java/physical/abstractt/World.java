@@ -181,7 +181,6 @@ abstract public class World {
                     animals.remove(position);
                 }
             }
-            // Usunięcie martwego zwierzęcia z potomków jego rodziców
             for (physical.abstractt.Animal potentialParent : allAnimals) {
                 potentialParent.getDescendants().remove(animal);
 
@@ -303,6 +302,15 @@ abstract public class World {
 
         }
     }
+    public Vector2d getRandomPlantPosition() {
+        if (plants.isEmpty()) {
+            return null;
+        }
+
+        List<Vector2d> plantPositions = new ArrayList<>(plants.keySet());
+        Random random = new Random();
+        return plantPositions.get(random.nextInt(plantPositions.size()));
+    }
 
     public void reproduction(int sexEnergy, int energyLoss, int minMutations, int maxMutations) {
         for (List<physical.abstractt.Animal> allAnimals : animals.values()) {
@@ -342,4 +350,31 @@ abstract public class World {
 
         return mostPopularGenes;
     }
+
+    public abstract void startFire();
+
+    public abstract void endFire();
+    public List<Vector2d> getPlantNeighbours(Vector2d plantPosition) {
+        List<Vector2d> neighbors = new ArrayList<>();
+        if (!plants.containsKey(plantPosition)) {
+            return neighbors;
+        }
+        Vector2d[] directions = {
+                new Vector2d(0, 1),
+                new Vector2d(0, -1),
+                new Vector2d(-1, 0),
+                new Vector2d(1, 0)
+        };
+
+        for (Vector2d direction : directions) {
+            Vector2d neighborPosition = plantPosition.add(direction);
+
+            if (boundary.isInside(neighborPosition) && plants.containsKey(neighborPosition)) {
+                neighbors.add(neighborPosition);
+            }
+        }
+
+        return neighbors;
+    }
+
 }

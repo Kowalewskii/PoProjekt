@@ -97,13 +97,13 @@
             </GridPane.margin>
         </Button>
 
-        <Button text="Show Most Popular Genes Animals" GridPane.rowIndex="21"
+        <Button text="Show Most Popular Genes Animals (double click)" GridPane.rowIndex="21"
                 fx:id="mostPopularGenesButton">
             <GridPane.margin>
                 <Insets top="5" right="10" bottom="5" left="10"/>
             </GridPane.margin>
         </Button>
-        <Button text="Show Jungle" GridPane.rowIndex="22"
+        <Button text="Show Jungle (double click)" GridPane.rowIndex="22"
                 fx:id="JungleFieldsButton" >
             <GridPane.margin>
                 <Insets top="5" right="10" bottom="5" left="10"/>

@@ -13,8 +13,8 @@ public class GameStatic {
     static final int yearDays = 365;
 
     public static Color getAnimalColor(int maximumEnergy, Animal activeAnimal) {
-        Color startColor = Color.GRAY;
-        Color endColor = Color.YELLOW;
+        Color startColor = Color.RED;
+        Color endColor = Color.HOTPINK;
         double value;
         if (maximumEnergy == 0) {
             value = 0.0;
@@ -92,12 +92,10 @@ public class GameStatic {
 
         return removeTrailingZeros(timeYears) + " years " + removeTrailingZeros(timeDays) + " days";
     }
-
     public static String convertNumberToString(double number) {
         double parsedNumber = (double) Math.round(number * 1000) / 1000;
         return removeTrailingZeros(parsedNumber);
     }
-
     private static String removeTrailingZeros(double number) {
         return new BigDecimal(String.valueOf(number)).stripTrailingZeros().toPlainString();
     }

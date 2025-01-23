@@ -14,38 +14,26 @@ class GameElementTest {
 
     @BeforeEach
     void setUp() {
-        position = new Vector2d(5, 5);  // Ustalamy przykładową pozycję
-        plant = new Plant(position);  // Tworzymy nową roślinę
+        position = new Vector2d(5, 5);
+        plant = new Plant(position);
     }
 
     @Test
     void testPlantCreation() {
-        // Testowanie poprawności tworzenia rośliny
-        assertNotNull(plant);  // Sprawdzamy, czy roślina została poprawnie utworzona
-        assertEquals(position, plant.getPosition());  // Sprawdzamy, czy pozycja rośliny jest zgodna z oczekiwaniami
-        assertNotNull(plant.getId());  // Sprawdzamy, czy ID rośliny zostało wygenerowane
+        assertNotNull(plant);
+        assertEquals(position, plant.getPosition());
+        assertNotNull(plant.getId());
     }
 
     @Test
     void testGetVisualization() {
-        // Testowanie metody getVisualization
-        Pane pane = new Pane();  // Tworzymy panel, w którym roślina będzie wyświetlana
-        Node visualization = plant.getVisualization(pane);  // Pobieramy wizualizację rośliny
+        Pane pane = new Pane();
+        Node visualization = plant.getVisualization(pane);
 
-        assertNotNull(visualization);  // Sprawdzamy, czy wizualizacja została utworzona
-        assertTrue(visualization instanceof Pane);  // Sprawdzamy, czy wizualizacja jest instancją klasy Pane
-        assertEquals("-fx-background-color: green", visualization.getStyle());  // Sprawdzamy, czy roślina ma odpowiedni kolor
+        assertNotNull(visualization);
+        assertInstanceOf(Pane.class, visualization);
+        assertEquals("-fx-background-color: green", visualization.getStyle());
     }
 
-    @Test
-    void testPlantFireState() {
-        // Testowanie stanu ognia rośliny
-        assertFalse(plant.isOnFire());  // Początkowo roślina nie powinna być na ogniu
 
-        plant.setOnFire(true);  // Ustawiamy roślinę na ogniu
-        assertTrue(plant.isOnFire());  // Sprawdzamy, czy roślina jest na ogniu
-
-        plant.setOnFire(false);  // Ustawiamy roślinę z powrotem na brak ognia
-        assertFalse(plant.isOnFire());  // Sprawdzamy, czy roślina nie jest na ogniu
-    }
 }

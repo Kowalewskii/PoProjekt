@@ -29,6 +29,10 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
     @FXML
     private Label gameStatsDays;
     @FXML
+    private Label gameStatsFireInterval;
+    @FXML
+    private Label gameStatsFireDuration;
+    @FXML
     private Label gameStatsAnimals;
     @FXML
     private Label gameStatsPlants;
@@ -86,7 +90,6 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
     private boolean ifShowJungle = false;
 
     @FXML
-    //@Deprecated(since = "1.2")
     private void initialize() {
 
         for (Node node : getClassElements("animal-statistic")) {
@@ -141,7 +144,7 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
         for (Animal animal : mostPopularGenesCreatures) {
             Pane pane = fields.get(animal.getPosition());
             Pane displayPane = new Pane();
-            displayPane.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)));
+            displayPane.setBackground(new Background(new BackgroundFill(Color.DARKVIOLET, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)));
             pane.getChildren().add(displayPane);
             displayPane.toBack();
         }
@@ -151,10 +154,10 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
         for (Vector2d position : pos1) {
             Pane pane = fields.get(position);
             Pane displayPane = new Pane();
-            displayPane.setBorder(new Border(new javafx.scene.layout.BorderStroke(Color.GRAY,
+            displayPane.setBorder(new Border(new javafx.scene.layout.BorderStroke(Color.INDIGO,
                     javafx.scene.layout.BorderStrokeStyle.SOLID,
                     CornerRadii.EMPTY,
-                    new BorderWidths(pane.getWidth() / 10.0))));
+                    new BorderWidths(pane.getWidth() / 25.0))));
             pane.getChildren().add(displayPane);
         }
     }
@@ -185,9 +188,7 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
             this.showWorldStats(statistics);
             this.showAnimalStats();
 
-            if (shouldExportStatistics) {
-                exportCsvStats(world, statistics);
-            }
+
         });
     }
 
@@ -220,11 +221,13 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
         }
     }
 
+
     public void creationOfTheWorld(World world) {
         for (int row = 0; row < worldStats.mapHeight(); row++) {
             for (int col = 0; col < worldStats.mapWidth(); col++) {
                 Pane pane = fields.get(new Vector2d(col, row));
-                pane.setStyle("-fx-background-color: rgba(144, 238, 144, 0.2)");
+                String gradient = "-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(139, 117, 95, 1), rgba(159, 121, 95, 1))";
+                pane.setStyle(gradient);
                 pane.getChildren().clear();
             }
         }
@@ -237,14 +240,14 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
         }
 
         Animal animalEnerMax = world.getAllAnimals().isEmpty() ? null :
-                world.dominatingAnimals(world.getAllAnimals(), 1).get(0);
+                world.dominatingAnimals(world.getAllAnimals(), 1).getFirst();
 
         for (List<Animal> animalsArray : world.getAnimals().values()) {
-            Animal chosenCreature = world.dominatingAnimals(animalsArray, 1).get(0);
+            Animal chosenCreature = world.dominatingAnimals(animalsArray, 1).getFirst();
             Pane pane = fields.get(chosenCreature.getPosition());
             WorldElementBox animalBox = new WorldElementBox(chosenCreature, pane, true);
             Pane animalPane = animalBox.getCellDisplay();
-            Circle circle = (Circle) animalPane.getChildren().get(0);
+            Circle circle = (Circle) animalPane.getChildren().getFirst();
             circle.setFill(GameStatic.getAnimalColor(animalEnerMax.getEnergy(), chosenCreature));
 
             if (chosenCreature.equals(this.chosenCreature)) {
@@ -269,7 +272,6 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
         gameStatsAverageEnergy.setText(GameStatic.convertNumberToString(statistics.getAverageEnergy()));
         gameStatsAverageAge.setText(GameStatic.convertDaysToTime(statistics.getAverageFinalDate()));
         gameStatsAverageDescendants1.setText(GameStatic.convertNumberToString(statistics.getAverageDescendantsNumber()));
-
         if (!statistics.getMostPopularGenes().isEmpty()) {
             gameStatsBestGene1.setText(GameStatic.toStringGenes(statistics.getMostPopularGenes().get(0)));
         } else {
@@ -333,28 +335,7 @@ public class GameVisualizator extends BaseVisualizator implements MapChangeListe
         }
     }
 
-    public void exportCsvStats(World world, Statistics statistics) {
-        String projectPath = System.getProperty("user.dir");
-        String filename = "World_Statistics_" + world.getId() + ".csv";
-        String filePath = projectPath + "/src/main/resources/statistics/" + filename;
 
-        File csvFile = new File(filePath);
-        boolean fileExist = csvFile.exists();
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            if (!fileExist) {
-                CsvChanger.setStatsTop(writer);
-            }
-
-            CsvChanger.fillStatisticsDay(writer, world.getId(), statistics, chosenCreature);
-
-        } catch (Exception e) {
-            if (showExportStatisticsAlert) {
-                showExportStatisticsAlert = false;
-                showAlert("Error", "Error on saving statistics", "Cannot export file with world and animal statistics", Alert.AlertType.ERROR);
-            }
-        }
-    }
 
     public void setThread(ExtendedThread thread) {
         this.thread = thread;

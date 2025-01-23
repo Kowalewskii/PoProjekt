@@ -82,20 +82,24 @@ public class Simulation implements Runnable {
                 world.eatPlants(worldStats.onePlantEnergy());
                 world.reproduction(worldStats.animalSexRequiredEnergy(), worldStats.animalSexEnergyLoss(), worldStats.animalMinMutation(), worldStats.animalMaxMutation());
                 world.placeNPlants(worldStats.dailyPlantIncrease());
+                if(dayCount % worldStats.fireInterval()==0){
+                    world.startFire();
+                }
+                world.endFire();
+
                 world.updateStats(statistics, dayCount);
 
                 try {
                     world.mapChanged(statistics);
-                    Thread.sleep(300); // Simulation speed
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     System.out.println(e.getMessage());
                 } finally {
                     world.passedDay(worldStats.animalDailyEnergyLoss());
                 }
             } else {
-                // If paused, simply wait
                 try {
-                    Thread.sleep(100); // Reduce CPU usage while paused
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     System.out.println(e.getMessage());
                 }
