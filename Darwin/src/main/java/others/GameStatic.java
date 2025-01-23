@@ -13,8 +13,8 @@ public class GameStatic {
     static final int yearDays = 365;
 
     public static Color getAnimalColor(int maximumEnergy, Animal activeAnimal) {
-        Color startColor = Color.RED;
-        Color endColor = Color.HOTPINK;
+        Color finishColor = Color.RED;
+        Color startColor = Color.YELLOW;
         double value;
         if (maximumEnergy == 0) {
             value = 0.0;
@@ -23,9 +23,9 @@ public class GameStatic {
         }
 
 
-        double red = startColor.getRed() + (endColor.getRed() - startColor.getRed()) * value;
-        double green = startColor.getGreen() + (endColor.getGreen() - startColor.getGreen()) * value;
-        double blue = startColor.getBlue() + (endColor.getBlue() - startColor.getBlue()) * value;
+        double red = finishColor.getRed() + (startColor.getRed() - finishColor.getRed()) * value;
+        double green = finishColor.getGreen() + (startColor.getGreen() - finishColor.getGreen()) * value;
+        double blue = finishColor.getBlue() + (startColor.getBlue() - finishColor.getBlue()) * value;
 
         return new Color(red, green, blue, 1.0);
     }

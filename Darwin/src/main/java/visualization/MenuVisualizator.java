@@ -129,8 +129,8 @@ public class MenuVisualizator extends BaseVisualizator {
         }
         if (worldStats.animalSexEnergyLoss() <= 0 || worldStats.animalDailyEnergyLoss() <= 0) {
             throw new InvalidGameParamsException();
-        }
-        if (worldStats.animalMinMutation() < 0 || worldStats.animalMaxMutation() <= 0 || worldStats.animalGenesLength() <= 0) {
+        }//zmiana
+        if (worldStats.animalMinMutation() < 0 || worldStats.animalMaxMutation() < 0 || worldStats.animalGenesLength() <= 0) {
             throw new InvalidGameParamsException();
         }
         if (worldStats.animalMinMutation() > worldStats.animalMaxMutation()) {
